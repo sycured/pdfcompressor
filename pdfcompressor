@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+BASE="-dNOPAUSE -dBATCH -sDEVICE=pdfwrite"
+COMPATIBILITY_LEVEL="1.4"
+QUALITY="-2"
+OUTPUT="compressed.pdf"
+INPUT=""
+
+while [[ $# > 1 ]] ; do
+    case "$1"
+        in
+        --screen|-0)
+            QUALITY="/screen";;
+
+        --ebook|-1)
+            QUALITY="/eboot";;
+
+        --print|-2)
+            QUALITY="/printer";;
+
+        --prepress|-3)
+            QUALITY="/prepress";;
+
+        --compatibility|-c)
+            shift
+            COMPATIBILITY_LEVEL=$1;;
+
+        --output|-o)
+            shift
+            OUTPUT=$1;;
+
+        --input|-i)
+            shift
+            INPUT=$1;;
+    esac
+    shift
+done
+
+gs $BASE -dCompatibilityLevel=$COMPATIBILITY_LEVEL \
+-dPDFSETTINGS=$QUALITY -sOutputFile=$OUTPUT $INPUT
