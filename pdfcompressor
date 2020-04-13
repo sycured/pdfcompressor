@@ -2,39 +2,50 @@
 
 BASE="-dNOPAUSE -dBATCH -sDEVICE=pdfwrite"
 COMPATIBILITY_LEVEL="1.4"
-QUALITY="-2"
+QUALITY="/printer"
+SILENT=""
 OUTPUT="compressed.pdf"
 INPUT=""
 
-while [[ $# > 1 ]] ; do
-    case "$1"
-        in
-        --screen|-0)
-            QUALITY="/screen";;
+while [[ $# > 1 ]]; do
+    case "$1" in
 
-        --ebook|-1)
-            QUALITY="/eboot";;
+    --screen | -0)
+        QUALITY="/screen"
+        ;;
 
-        --print|-2)
-            QUALITY="/printer";;
+    --ebook | -1)
+        QUALITY="/eboot"
+        ;;
 
-        --prepress|-3)
-            QUALITY="/prepress";;
+    --print | -2)
+        QUALITY="/printer"
+        ;;
 
-        --compatibility|-c)
-            shift
-            COMPATIBILITY_LEVEL=$1;;
+    --prepress | -3)
+        QUALITY="/prepress"
+        ;;
 
-        --output|-o)
-            shift
-            OUTPUT=$1;;
+    --compatibility | -c)
+        shift
+        COMPATIBILITY_LEVEL=$1
+        ;;
 
-        --input|-i)
-            shift
-            INPUT=$1;;
+    --silent | -s)
+        SILENT="-dQUIET"
+        ;;
+
+    --output | -o)
+        shift
+        OUTPUT=$1
+        ;;
+
+    --input | -i)
+        shift
+        INPUT=$1
+        ;;
     esac
     shift
 done
 
-gs $BASE -dCompatibilityLevel=$COMPATIBILITY_LEVEL \
--dPDFSETTINGS=$QUALITY -sOutputFile=$OUTPUT $INPUT
+gs $BASE $SILENT -dCompatibilityLevel="$COMPATIBILITY_LEVEL" -dPDFSETTINGS="$QUALITY" -sOutputFile="$OUTPUT" "$INPUT"
