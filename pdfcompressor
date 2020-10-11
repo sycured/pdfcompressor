@@ -7,7 +7,7 @@ SILENT=""
 OUTPUT="compressed.pdf"
 INPUT=""
 
-while [[ $# > 1 ]]; do
+while [[ $# -gt 1 ]]; do
     case "$1" in
 
     --screen | -0)
@@ -48,4 +48,4 @@ while [[ $# > 1 ]]; do
     shift
 done
 
-gs $BASE $SILENT -dCompatibilityLevel="$COMPATIBILITY_LEVEL" -dPDFSETTINGS="$QUALITY" -sOutputFile="$OUTPUT" "$INPUT"
+gs "$BASE" $SILENT -dCompatibilityLevel="$COMPATIBILITY_LEVEL" -dPDFSETTINGS="$QUALITY" -sOutputFile="$OUTPUT" "$INPUT"
